@@ -1,0 +1,92 @@
+<html>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<style type='text/css'>
+body { font:12px/1.5 Helvetica,Tahoma,Arial,Sans-serif;background:#fff; }
+table {	width:100%;padding:0;margin:0;border-collapse:collapse;border:2px solid #BDD;}
+th { color:#567;background:#DEE;border:1px solid #CDD;text-align:middle;padding:4px; }
+td { border:1px solid #CEE;padding:1px; }
+tr { background:#fff; }
+tr.alt { background:#EFF; }
+.seqnum { text-align:center;font-weight:bolder;color:#F00; }
+input { font-family:NSimSun,Arial,Sans-serif; margin-top: 1px; margin-bottom: 1px}
+button { font-family:NSimSun,Arial,Sans-serif; margin-top: 1px; margin-bottom: 1px}
+@media only screen and (max-width : 1023px) {
+	.searchbox { width: 40%; margin-right: 10px }
+}
+@media only screen and (min-width : 1024px) {
+	.searchbox { margin-right: 2px}
+}
+.bottombar { background:#EFF;clear:both;position:fixed;z-index:100;bottom:0;left:0;width:100%;margin:0;padding:6px;border:0; font-size:12px; color: #5e666e; text-align:center; }
+</style>
+</head>
+<body ng-app='testApp' ng-controller='testController'>
+	<title>QQ77030757 初始：妈特皮</title>
+	<div id=imgdiv style='display:none;'></div>
+	<p>
+		<p style="font-weight:bolder">使用说明 <button onclick='if (imgdiv.style.display=="none") { if(imgdiv.children.length===0) {var image = document.createElement("img");imgdiv.appendChild(image);image.src="http://ofh4cder1.bkt.clouddn.com/u6.png";image.style="height:auto;width:auto;max-width:100%;max-height:100%";image.onclick=function(){imgdiv.style.cssText="display:none;"};}imgdiv.style.cssText="display:block;" } else {imgdiv.style.cssText="display:none"}'>图片说明</button></p>
+		<p>　四个输入框输入需要的搜索的队伍内宠物组合，来进行组队配合搜索。</p>
+		<p>　需要多个的话可输入多遍。</p>
+		<p>　名字不清楚的可以用【：499】这样的输入来搜索，用冒号，后加编号的方式来查，这样：499会自动翻译成暗埃。</p>
+		<p>　同样不清楚中文需要反查编号的也可以【：暗埃】→ 499 </p>
+		<p>　新手不清楚的可以点组队列表和别名列表看看 </p>
+	</p>
+	<form ng-submit="search()">
+		<input type=text class="searchbox" ng-model="searchPets[$index]" ng-repeat="sPet in searchPets track by $index" ng-change="searchBoxChange($index)" />
+		<br />
+		<input id="btnSearch" type=submit value="搜号" />
+		<a ng-click="location.path(location.path()!='/combi'?'/combi':'')" href="javascript:void(0);">组队列表</a>
+		<a ng-click="location.path(location.path()!='/alias'?'/alias':'')" href="javascript:void(0);">别名列表</a>
+		<button ng-click="searchPets=['白虎','天秤','','']">暗雅点这里</button>
+		<button ng-click="searchPets=['暗咖喱','日龙女','稻田','']">拉鸡点这里</button>
+		<button type=button onclick="otherteamdiv.style.display = otherteamdiv.style.display == 'none' ? '' : 'none'">其他强力队伍点这里</button>
+		<div id=otherteamdiv style="display:none">
+			<button ng-click="searchPets=['稻田','白虎','白虎','白虎','','']">稻田3白虎</button>
+			<button ng-click="searchPets=['木龙眼镜妹','','','']">眼镜妹（静杖の龍機博士?ジュリ）</button>
+			<button ng-click="searchPets=['梅利奥达斯','','','']">七大罪团长(梅利奥达斯)</button>
+			<button ng-click="searchPets=['天央神','','','']">天央神</button>
+		</div>
+	</form>
+	<table ng-show="location.path()=='/alias'">
+		<thead><tr><th style="width:90px">正名</th><th>别名</th></tr></thead>
+		<tbody>
+			<tr ng-class-even="'alt'" ng-repeat="onerow in petAlias">
+				<td ng-bind="onerow.real"></td>
+				<td><span ng-repeat="onealias in onerow.alias" ng-bind="onealias+' '"></span></td>
+			</tr>
+		</tbody>
+	</table>
+	<table ng-show="location.path()=='/combi'">
+		<thead><tr><th style="width:58px">队名</th><th style="width:74px">必须队员</th><th>一般队员</th></tr></thead>
+		<tbody>
+			<tr ng-class-even="'alt'" ng-repeat="onerow in petCombi">
+				<td ng-bind="onerow.combi"></td>
+				<td>
+					<span ng-repeat="onecore in onerow.core" ng-bind=" showStrAndArr(onecore) "></span>
+				</td>
+				<td><span ng-repeat="onepet in onerow.pets" ng-bind="onepet.replace(' ', '')"></span></td>
+			</tr>
+		</tbody>
+	</table>
+	<table>
+		<thead><tr><th style="width:62px"></th><th nowrap>编号</th><th>内容</th></tr></thead>
+		<tbody>
+			<tr ng-class-even="'alt'" ng-repeat="onerow in searchresults">
+				<td ng-bind="onerow.time"></td>
+				<td class="seqnum" ng-bind="onerow.id"></td>
+				<td>
+					<div ng-bind="onerow.linkstr"></div>
+					<div ng-bind="'————以上是此号BOX=' + onerow.box + '。内含马桶神' + onerow.pets.length + '个。————'"></div>
+					<div ng-bind="'————以下为参考可组队伍————'">数据载入中……稍等半分钟……载入完才可搜号，不会用的请点【图片说明】</div>
+					<div ng-repeat="onecombi in onerow.combistrs" ng-bind="onecombi"></div>
+					<div title="重复或完全无用可出宠：{{onerow.sellStr}}" ng-bind="'除上述宠物与队伍，此编号【'+onerow.id+'】号内还有　'+onerow.stone+'石&amp;'+onerow.egg+'蛋龙' + (onerow.mp>0 ? ('　活动已领mp:'+onerow.mp+'万') : '　')+ '　出宠后总mp:'+onerow.sumValue+ '　&plus;297邮件='+onerow.p297+'封　5色喇叭分别='+onerow.lb+'　5色圣诞龙='+onerow.sd"></div>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot><tr><td colspan=3 style="font-weight:bolder; color: #5e666e; ">请先【搜号】后，这里才会显示组队内容哦~　不会用的请点【图片说明】~</td></tr></tfoot>
+	</table>
+	<p class="bottombar" ng-bind="'最后更新 2017.'+updatedate+' By 妈特皮 QQ 77030757'">载入中……稍等半分钟……</p>
+	<script src="http://ofh4cder1.bkt.clouddn.com/all.txt?6238"></script>
+</body>
+</html>
